@@ -1,0 +1,49 @@
+﻿@model WebApplication3.Models.People
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>People</h4>
+<hr />
+   <div id="c"></div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="form1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control form-control-sm" autofocus />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2 mb-2">
+               <button type="submit" value="Create" class="btn btn-primary btn-sm">
+                  <span id="spinner-icon" class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+                  <span id="spinner-label" role="status" class="d-none"> Inserindo...</span>
+                  <span id="spinner-default">
+                     <i class="bi bi-plus"></i> Inserir
+                  </span>
+               </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>      
+      $(function () {         
+         $("#form1").submitOnce({
+            beforeSubmit: function(form){
+               loadingButtonSubmit();
+            }
+         });          
+      });
+    </script>
+}
