@@ -43,7 +43,7 @@ namespace WebApplication3.Controllers
         }
     }
 
-    class Item
+    public sealed class Item
     {
         public Item(int id, string text)
         {
