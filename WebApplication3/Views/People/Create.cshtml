@@ -1,22 +1,21 @@
 ﻿@model WebApplication3.Models.People
-
-@{
-    ViewData["Title"] = "Create";
-}
-
+@{    ViewData["Title"] = "Create";}
 <h1>Create</h1>
-
 <h4>People</h4>
-<hr />
-   <div id="c"></div>
+<hr />   
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" id="form1">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mt-1">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control form-control-sm" autofocus />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-1">
+                <label asp-for="Cnpj" class="control-label"></label>
+                <input asp-for="Cnpj" class="form-control form-control-sm" />
+                <span asp-validation-for="Cnpj" class="text-danger"></span>
             </div>
             <div class="form-group mt-2 mb-2">
                <button type="submit" value="Create" class="btn btn-primary btn-sm">
@@ -37,13 +36,28 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="~/jquery.inputmask/jquery.inputmask.min.js"></script>
     <script>      
       $(function () {         
          $("#form1").submitOnce({
             beforeSubmit: function(form){
                loadingButtonSubmit();
             }
-         });          
+         });     
+         $("#Cnpj").inputmask({
+             mask: "AA.AAA.AAA/AAAA-99",
+             definitions: {
+                 'A': {
+                     validator: "[A-Za-z0-9]",
+                     casing: "upper"
+                 }
+             }
+         });
+         // $("#telefone").inputmask({
+         //     mask: ["(99)9999-9999", "(99)99999-9999"],
+         //     greedy: false,
+         //     keepStatic: false
+         // });
       });
     </script>
 }

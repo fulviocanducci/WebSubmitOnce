@@ -1,11 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Canducci.Validations.Attributes;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication3.Models
 {
     public class People
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Digite o nome")]
         public string Name { get; set; } = null!;
+
+        [Required(ErrorMessage = "Digite o CNPJ")]
+        [CnpjOrOptional(ErrorMessage = "Cnpj inválido")]
+        public string Cnpj { get; set; } = null!;
     }
 
     public class DataContext: DbContext
@@ -27,6 +34,7 @@ namespace WebApplication3.Models
                 x.HasKey(c => c.Id);
                 x.Property(c => c.Id).ValueGeneratedOnAdd();
                 x.Property(c => c.Name).HasMaxLength(100).IsRequired();
+                x.Property(c => c.Cnpj).HasMaxLength(18).IsRequired();
             });
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -6,3 +6,52 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<form class="" name="form1" method="post" asp-action="Index">
+<div class="row">
+   <div class="col-md-4 mt-1">
+      <input type="text" id="t1" name="t1" class="form-control form-control-sm"/>
+   </div>
+   <div class="col-md-8 mt-1">
+      <select name="t2" class="form-select form-select-sm" id="tags"></select>
+   </div>
+   <div class="col-md-12 mt-1 mb-1">
+   <button type="submit" class="btn btn-sm btn-primary">Enviar</button>
+      </div>
+</div>
+</form>
+
+@section Scripts {
+   <script>
+      $(function(){
+         $("#tags").select2({
+            tags: false,
+            tokenSeparators: [',', ' '],
+            placeholder: "Digite uma tag",
+            theme: "bootstrap-5",
+            minimumInputLength: 1,
+            width: "100%",
+            ajax: {
+                  url: "/Home/GetTags",
+                  dataType: "json",
+                  delay: 250,
+                  data: function (params) {
+                     return {
+                        term: params.term
+                     };
+                  },
+                  processResults: function (data) {
+                     return {
+                        results: data
+                     };
+                  }
+            }
+         });
+         // $('#tags').on('select2:select', function (e) {
+         //    console.log(e.params.data);
+         //    let data = e.params.data;
+         //    let option = new Option(data.text, 5, true, true);
+         //     $('#tags').append(option).trigger('change');
+         // });
+      })
+   </script>
+}
